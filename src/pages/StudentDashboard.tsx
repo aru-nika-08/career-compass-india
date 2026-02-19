@@ -1,5 +1,6 @@
 import { Header } from "@/components/layout/Header";
 import { ReadinessBadge } from "@/components/ui/ReadinessBadge";
+import { Link } from "react-router-dom";
 import { ReadinessProgress } from "@/components/ui/ReadinessProgress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -150,9 +151,11 @@ export default function StudentDashboard() {
                     Complete these tasks to level up your readiness
                   </CardDescription>
                 </div>
-                <Button variant="ghost" size="sm">
-                  View All
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button variant="ghost" size="sm" asChild>
+                  <Link to="/student/career-pathway">
+                    View All
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </CardHeader>
               <CardContent>
@@ -238,17 +241,23 @@ export default function StudentDashboard() {
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <Button className="w-full justify-start" variant="outline">
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  Ask Alumni a Question
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/student/ask-alumni">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Ask Alumni a Question
+                  </Link>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
-                  <Briefcase className="mr-2 h-4 w-4" />
-                  Browse Internships
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/student/internships">
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    Browse Internships
+                  </Link>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
-                  <BookOpen className="mr-2 h-4 w-4" />
-                  Request Mentorship
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/student/mentorship">
+                    <BookOpen className="mr-2 h-4 w-4" />
+                    Request Mentorship
+                  </Link>
                 </Button>
               </CardContent>
             </Card>

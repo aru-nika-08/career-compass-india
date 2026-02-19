@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -84,9 +85,11 @@ export default function AlumniDashboard() {
                 </p>
               </div>
             </div>
-            <Button>
-              <Plus className="mr-2 h-4 w-4" />
-              Post Internship
+            <Button asChild>
+              <Link to="/alumni/post-internship">
+                <Plus className="mr-2 h-4 w-4" />
+                Post Internship
+              </Link>
             </Button>
           </div>
         </div>
@@ -177,9 +180,11 @@ export default function AlumniDashboard() {
                     </li>
                   ))}
                 </ul>
-                <Button variant="ghost" className="w-full mt-4">
-                  View All Questions
-                  <ArrowRight className="ml-2 h-4 w-4" />
+                <Button variant="ghost" className="w-full mt-4" asChild>
+                  <Link to="/alumni/answer-questions">
+                    View All Questions
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
                 </Button>
               </CardContent>
             </Card>
@@ -223,8 +228,8 @@ export default function AlumniDashboard() {
                     </div>
                   ))}
                 </div>
-                <Button variant="outline" className="w-full mt-4">
-                  Edit Journey
+                <Button variant="outline" className="w-full mt-4" asChild>
+                  <Link to="/alumni/edit-journey">Edit Journey</Link>
                 </Button>
               </CardContent>
             </Card>
@@ -284,17 +289,23 @@ export default function AlumniDashboard() {
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <Button className="w-full justify-start" variant="outline">
-                  <Briefcase className="mr-2 h-4 w-4" />
-                  Post New Internship
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/alumni/post-internship">
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    Post New Internship
+                  </Link>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
-                  <Users className="mr-2 h-4 w-4" />
-                  Find Students to Mentor
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/alumni/find-students">
+                    <Users className="mr-2 h-4 w-4" />
+                    Find Students to Mentor
+                  </Link>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
-                  <MessageCircle className="mr-2 h-4 w-4" />
-                  Schedule Session
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/alumni/schedule-session">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    Schedule Session
+                  </Link>
                 </Button>
               </CardContent>
             </Card>

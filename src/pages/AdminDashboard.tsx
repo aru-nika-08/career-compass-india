@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Header } from "@/components/layout/Header";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -80,13 +81,17 @@ export default function AdminDashboard() {
               </p>
             </div>
             <div className="flex gap-3">
-              <Button variant="outline">
-                <Bell className="mr-2 h-4 w-4" />
-                Announcements
+              <Button variant="outline" asChild>
+                <Link to="/admin/announcements">
+                  <Bell className="mr-2 h-4 w-4" />
+                  Announcements
+                </Link>
               </Button>
-              <Button>
-                <Plus className="mr-2 h-4 w-4" />
-                Create Event
+              <Button asChild>
+                <Link to="/admin/events">
+                  <Plus className="mr-2 h-4 w-4" />
+                  Create Event
+                </Link>
               </Button>
             </div>
           </div>
@@ -292,17 +297,23 @@ export default function AdminDashboard() {
                 <CardTitle className="text-lg">Quick Actions</CardTitle>
               </CardHeader>
               <CardContent className="space-y-2">
-                <Button className="w-full justify-start" variant="outline">
-                  <Bell className="mr-2 h-4 w-4" />
-                  Send Announcement
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/admin/announcements">
+                    <Bell className="mr-2 h-4 w-4" />
+                    Send Announcement
+                  </Link>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
-                  <Users className="mr-2 h-4 w-4" />
-                  Export Reports
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/admin/reports">
+                    <Users className="mr-2 h-4 w-4" />
+                    Export Reports
+                  </Link>
                 </Button>
-                <Button className="w-full justify-start" variant="outline">
-                  <Briefcase className="mr-2 h-4 w-4" />
-                  Manage Internships
+                <Button className="w-full justify-start" variant="outline" asChild>
+                  <Link to="/admin/internships">
+                    <Briefcase className="mr-2 h-4 w-4" />
+                    Manage Internships
+                  </Link>
                 </Button>
               </CardContent>
             </Card>

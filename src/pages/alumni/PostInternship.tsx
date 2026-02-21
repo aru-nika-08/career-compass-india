@@ -23,7 +23,7 @@ export default function PostInternship() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header userRole="alumni" />
+      <Header />
       <main className="container py-8 max-w-2xl">
         <div className="mb-6 animate-fade-in">
           <Button variant="ghost" size="sm" asChild>

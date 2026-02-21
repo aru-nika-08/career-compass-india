@@ -73,7 +73,7 @@ export default function BrowseInternships() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header userRole="student" />
+      <Header />
       <main className="container py-8">
         <div className="mb-6 animate-fade-in">
           <Button variant="ghost" size="sm" asChild>

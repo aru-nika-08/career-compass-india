@@ -68,7 +68,7 @@ const recentActivity = [
 export default function AdminDashboard() {
   return (
     <div className="min-h-screen bg-background">
-      <Header userRole="admin" />
+      <Header />
 
       <main className="container py-8">
         {/* Header */}

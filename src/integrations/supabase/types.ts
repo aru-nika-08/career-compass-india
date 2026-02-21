@@ -14,16 +14,144 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      alumni_profiles: {
+        Row: {
+          batch_year: string | null
+          career_journey: Json | null
+          company_name: string | null
+          created_at: string
+          id: string
+          is_verified: boolean
+          job_title: string | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          batch_year?: string | null
+          career_journey?: Json | null
+          company_name?: string | null
+          created_at?: string
+          id?: string
+          is_verified?: boolean
+          job_title?: string | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          batch_year?: string | null
+          career_journey?: Json | null
+          company_name?: string | null
+          created_at?: string
+          id?: string
+          is_verified?: boolean
+          job_title?: string | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          avatar_url: string | null
+          created_at: string
+          first_name: string
+          id: string
+          last_name: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          avatar_url?: string | null
+          created_at?: string
+          first_name: string
+          id?: string
+          last_name: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          avatar_url?: string | null
+          created_at?: string
+          first_name?: string
+          id?: string
+          last_name?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      student_profiles: {
+        Row: {
+          branch: string | null
+          career_goals: string | null
+          created_at: string
+          current_year: string | null
+          id: string
+          projects: string[] | null
+          readiness_level: string
+          skills: string[] | null
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          branch?: string | null
+          career_goals?: string | null
+          created_at?: string
+          current_year?: string | null
+          id?: string
+          projects?: string[] | null
+          readiness_level?: string
+          skills?: string[] | null
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          branch?: string | null
+          career_goals?: string | null
+          created_at?: string
+          current_year?: string | null
+          id?: string
+          projects?: string[] | null
+          readiness_level?: string
+          skills?: string[] | null
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "student" | "alumni" | "admin"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +278,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["student", "alumni", "admin"],
+    },
   },
 } as const

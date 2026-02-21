@@ -3,6 +3,8 @@ import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { AuthProvider } from "@/contexts/AuthContext";
+import { ProtectedRoute } from "@/components/ProtectedRoute";
 import Index from "./pages/Index";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -38,36 +40,37 @@ const App = () => (
       <Toaster />
       <Sonner />
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/register" element={<Register />} />
-          
-          {/* Student routes */}
-          <Route path="/student/dashboard" element={<StudentDashboard />} />
-          <Route path="/student/ask-alumni" element={<AskAlumni />} />
-          <Route path="/student/internships" element={<BrowseInternships />} />
-          <Route path="/student/mentorship" element={<RequestMentorship />} />
-          <Route path="/student/career-pathway" element={<CareerPathway />} />
-          
-          {/* Alumni routes */}
-          <Route path="/alumni/dashboard" element={<AlumniDashboard />} />
-          <Route path="/alumni/post-internship" element={<PostInternship />} />
-          <Route path="/alumni/answer-questions" element={<AnswerQuestions />} />
-          <Route path="/alumni/edit-journey" element={<EditJourney />} />
-          <Route path="/alumni/find-students" element={<FindStudents />} />
-          <Route path="/alumni/schedule-session" element={<ScheduleSession />} />
-          
-          {/* Admin routes */}
-          <Route path="/admin/dashboard" element={<AdminDashboard />} />
-          <Route path="/admin/events" element={<ManageEvents />} />
-          <Route path="/admin/announcements" element={<SendAnnouncements />} />
-          <Route path="/admin/internships" element={<ManageInternships />} />
-          <Route path="/admin/reports" element={<ExportReports />} />
-          
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-          <Route path="*" element={<NotFound />} />
-        </Routes>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            
+            {/* Student routes */}
+            <Route path="/student/dashboard" element={<ProtectedRoute allowedRoles={["student"]}><StudentDashboard /></ProtectedRoute>} />
+            <Route path="/student/ask-alumni" element={<ProtectedRoute allowedRoles={["student"]}><AskAlumni /></ProtectedRoute>} />
+            <Route path="/student/internships" element={<ProtectedRoute allowedRoles={["student"]}><BrowseInternships /></ProtectedRoute>} />
+            <Route path="/student/mentorship" element={<ProtectedRoute allowedRoles={["student"]}><RequestMentorship /></ProtectedRoute>} />
+            <Route path="/student/career-pathway" element={<ProtectedRoute allowedRoles={["student"]}><CareerPathway /></ProtectedRoute>} />
+            
+            {/* Alumni routes */}
+            <Route path="/alumni/dashboard" element={<ProtectedRoute allowedRoles={["alumni"]}><AlumniDashboard /></ProtectedRoute>} />
+            <Route path="/alumni/post-internship" element={<ProtectedRoute allowedRoles={["alumni"]}><PostInternship /></ProtectedRoute>} />
+            <Route path="/alumni/answer-questions" element={<ProtectedRoute allowedRoles={["alumni"]}><AnswerQuestions /></ProtectedRoute>} />
+            <Route path="/alumni/edit-journey" element={<ProtectedRoute allowedRoles={["alumni"]}><EditJourney /></ProtectedRoute>} />
+            <Route path="/alumni/find-students" element={<ProtectedRoute allowedRoles={["alumni"]}><FindStudents /></ProtectedRoute>} />
+            <Route path="/alumni/schedule-session" element={<ProtectedRoute allowedRoles={["alumni"]}><ScheduleSession /></ProtectedRoute>} />
+            
+            {/* Admin routes */}
+            <Route path="/admin/dashboard" element={<ProtectedRoute allowedRoles={["admin"]}><AdminDashboard /></ProtectedRoute>} />
+            <Route path="/admin/events" element={<ProtectedRoute allowedRoles={["admin"]}><ManageEvents /></ProtectedRoute>} />
+            <Route path="/admin/announcements" element={<ProtectedRoute allowedRoles={["admin"]}><SendAnnouncements /></ProtectedRoute>} />
+            <Route path="/admin/internships" element={<ProtectedRoute allowedRoles={["admin"]}><ManageInternships /></ProtectedRoute>} />
+            <Route path="/admin/reports" element={<ProtectedRoute allowedRoles={["admin"]}><ExportReports /></ProtectedRoute>} />
+            
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </TooltipProvider>
   </QueryClientProvider>

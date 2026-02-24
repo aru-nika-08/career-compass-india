@@ -61,7 +61,7 @@ export default function EditJourney() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header userRole="alumni" />
       <main className="container py-8 max-w-2xl">
         <div className="mb-6 animate-fade-in">
           <Button variant="ghost" size="sm" asChild>

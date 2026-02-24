@@ -1,4 +1,4 @@
-import { CheckCircle2, MapPin, Rocket } from "lucide-react";
+import { CheckCircle2, MapPin, Rocket, Award } from "lucide-react";
 
 const steps = [
   {
@@ -22,6 +22,13 @@ const steps = [
     color: "text-primary",
     bgColor: "bg-primary/10",
   },
+  {
+    icon: Award,
+    title: "Unlock Opportunities",
+    description: "As you level up, gain access to internships, mentorship, and placement prep – all matching your readiness.",
+    color: "text-interview-ready",
+    bgColor: "bg-interview-ready/10",
+  },
 ];
 
 export function HowItWorksSection() {
@@ -31,11 +38,11 @@ export function HowItWorksSection() {
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold mb-4">How It Works</h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            A simple 3-step journey from where you are to where you want to be
+            A simple 4-step journey from where you are to where you want to be
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8">
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
             <div
               key={step.title}

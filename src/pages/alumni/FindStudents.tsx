@@ -66,7 +66,7 @@ const students = [
 export default function FindStudents() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header userRole="alumni" />
       <main className="container py-8">
         <div className="mb-6 animate-fade-in">
           <Button variant="ghost" size="sm" asChild>

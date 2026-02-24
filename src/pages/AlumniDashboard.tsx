@@ -60,7 +60,7 @@ const careerJourney = [
 export default function AlumniDashboard() {
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header userRole="alumni" />
 
       <main className="container py-8">
         {/* Welcome Section */}

@@ -51,7 +51,7 @@ export default function StudentDashboard() {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <Header userRole="student" />
 
       <main className="container py-8">
         {/* Welcome Section */}

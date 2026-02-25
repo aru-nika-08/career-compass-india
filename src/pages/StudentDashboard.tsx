@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Header } from "@/components/layout/Header";
 import { ReadinessBadge } from "@/components/ui/ReadinessBadge";
 import { Link } from "react-router-dom";
@@ -5,6 +6,11 @@ import { ReadinessProgress } from "@/components/ui/ReadinessProgress";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { SkillOnboarding } from "@/components/career/SkillOnboarding";
+import { AlumniMatchGrid } from "@/components/career/AlumniMatchGrid";
+import { useCareerProgress } from "@/hooks/useCareerProgress";
+import type { ReadinessLevel } from "@/hooks/useCareerProgress";
+import type { AlumniProfile } from "@/data/alumniJourneys";
 import {
   BookOpen,
   Briefcase,
@@ -15,13 +21,19 @@ import {
   Circle,
   Bell,
   Calendar,
+  Compass,
 } from "lucide-react";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 
 // Mock data
 const studentData = {
   name: "Rahul Kumar",
-  currentLevel: "internship-ready" as const,
-  levelProgress: 65,
   skills: [
     { name: "JavaScript", level: 75 },
     { name: "React", level: 60 },
@@ -46,9 +58,86 @@ const announcements = [
 ];
 
 export default function StudentDashboard() {
+  const { progress, updateProgress } = useCareerProgress();
+  const [careerDialogOpen, setCareerDialogOpen] = useState(false);
+
+  // Determine the onboarding phase
+  const needsOnboarding = !progress.onboardingComplete;
+  const needsAlumniMatch = progress.onboardingComplete && !progress.selectedAlumniId;
+
+  const handleOnboardingComplete = (skills: string[], projects: string[], level: ReadinessLevel) => {
+    updateProgress({
+      skills,
+      projects,
+      currentLevel: level,
+      onboardingComplete: true,
+    });
+  };
+
+  const handleSelectAlumni = (alumni: AlumniProfile) => {
+    updateProgress({ selectedAlumniId: alumni.id, targetRole: alumni.targetRoles[0] });
+  };
+
+  // Map career progress level to ReadinessBadge level
+  const badgeLevel = progress.currentLevel === "skill-building" ? "foundation" : progress.currentLevel;
+
+  const levelProgress = (() => {
+    switch (progress.currentLevel) {
+      case "foundation": return 20;
+      case "skill-building": return 40;
+      case "internship-ready": return 65;
+      case "interview-ready": return 90;
+      default: return 0;
+    }
+  })();
+
   const completedTasks = studentData.pathwayTasks.filter((t) => t.completed).length;
   const totalTasks = studentData.pathwayTasks.length;
 
+  // Phase 1: Show onboarding
+  if (needsOnboarding) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header userRole="student" />
+        <main className="container py-8">
+          <div className="mb-8 animate-fade-in text-center">
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">
+              Welcome! Let's Assess Your Skills 🎯
+            </h1>
+            <p className="text-muted-foreground">
+              Tell us about your skills and projects to determine your readiness level
+            </p>
+          </div>
+          <SkillOnboarding onComplete={handleOnboardingComplete} />
+        </main>
+      </div>
+    );
+  }
+
+  // Phase 2: Show alumni matching
+  if (needsAlumniMatch) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header userRole="student" />
+        <main className="container py-8">
+          <div className="mb-8 animate-fade-in text-center">
+            <div className="flex justify-center mb-4">
+              <ReadinessBadge level={badgeLevel} size="lg" />
+            </div>
+            <h1 className="text-2xl md:text-3xl font-bold mb-2">
+              Find Your Alumni Guide 🧭
+            </h1>
+            <p className="text-muted-foreground">
+              You're at <strong className="capitalize">{progress.currentLevel.replace("-", " ")}</strong> level. Choose an alumnus whose career path matches your goals.
+            </p>
+          </div>
+          <AlumniMatchGrid onSelectAlumni={handleSelectAlumni} />
+        </main>
+      </div>
+    );
+  }
+
+  // Phase 3: Full dashboard
   return (
     <div className="min-h-screen bg-background">
       <Header userRole="student" />
@@ -65,7 +154,33 @@ export default function StudentDashboard() {
                 You're making great progress. Keep going!
               </p>
             </div>
-            <ReadinessBadge level={studentData.currentLevel} size="lg" />
+            <div className="flex items-center gap-3">
+              {/* Career Pathway Icon Button */}
+              <Dialog open={careerDialogOpen} onOpenChange={setCareerDialogOpen}>
+                <DialogTrigger asChild>
+                  <Button variant="outline" size="icon" className="relative" title="Career Pathway">
+                    <Compass className="h-5 w-5" />
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Career Pathway</DialogTitle>
+                  </DialogHeader>
+                  <div className="py-2">
+                    <p className="text-sm text-muted-foreground mb-4">
+                      Access your full career journey, change your alumni guide, or start over.
+                    </p>
+                    <Button asChild className="w-full" onClick={() => setCareerDialogOpen(false)}>
+                      <Link to="/student/career-pathway">
+                        Open Full Career Pathway
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Link>
+                    </Button>
+                  </div>
+                </DialogContent>
+              </Dialog>
+              <ReadinessBadge level={badgeLevel} size="lg" />
+            </div>
           </div>
         </div>
 
@@ -79,11 +194,11 @@ export default function StudentDashboard() {
           </CardHeader>
           <CardContent>
             <ReadinessProgress
-              currentLevel={studentData.currentLevel}
-              progress={studentData.levelProgress}
+              currentLevel={badgeLevel}
+              progress={levelProgress}
             />
             <p className="text-sm text-muted-foreground mt-4">
-              Complete 2 more milestones to reach <strong>Interview Ready</strong> status
+              Current level: <strong className="capitalize">{progress.currentLevel.replace("-", " ")}</strong>
             </p>
           </CardContent>
         </Card>

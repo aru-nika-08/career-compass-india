@@ -6,6 +6,14 @@ import { Badge } from "@/components/ui/badge";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import {
   Users,
   UserCheck,
   Briefcase,
@@ -16,6 +24,7 @@ import {
   Clock,
   Bell,
   Plus,
+  GraduationCap,
 } from "lucide-react";
 
 // Mock data
@@ -63,6 +72,18 @@ const recentActivity = [
   { id: 2, action: "5 students reached Internship Ready", time: "1 hour ago", type: "milestone" },
   { id: 3, action: "Alumni verification approved: Amit K.", time: "2 hours ago", type: "verification" },
   { id: 4, action: "New mentorship connection formed", time: "3 hours ago", type: "mentorship" },
+];
+
+// Mock alumni directory data
+const alumniDirectory = [
+  { id: "1", name: "Vikram Singh", batch: "2018", company: "Google", jobTitle: "Senior SDE", branch: "CSE", verified: true, email: "vikram@gmail.com" },
+  { id: "2", name: "Ananya Reddy", batch: "2020", company: "Amazon", jobTitle: "SDE-II", branch: "CSE", verified: true, email: "ananya@gmail.com" },
+  { id: "3", name: "Karthik Iyer", batch: "2019", company: "Flipkart", jobTitle: "Data Scientist", branch: "IT", verified: false, email: "karthik@gmail.com" },
+  { id: "4", name: "Priya Sharma", batch: "2017", company: "Microsoft", jobTitle: "Product Manager", branch: "CSE", verified: true, email: "priya@gmail.com" },
+  { id: "5", name: "Rohit Mehta", batch: "2021", company: "Razorpay", jobTitle: "Frontend Engineer", branch: "ECE", verified: true, email: "rohit@gmail.com" },
+  { id: "6", name: "Sneha Patil", batch: "2016", company: "Infosys", jobTitle: "Tech Lead", branch: "CSE", verified: true, email: "sneha@gmail.com" },
+  { id: "7", name: "Amit Kumar", batch: "2019", company: "Swiggy", jobTitle: "Backend Engineer", branch: "IT", verified: false, email: "amit@gmail.com" },
+  { id: "8", name: "Neha Gupta", batch: "2020", company: "PhonePe", jobTitle: "ML Engineer", branch: "CSE", verified: true, email: "neha@gmail.com" },
 ];
 
 export default function AdminDashboard() {
@@ -225,6 +246,56 @@ export default function AdminDashboard() {
                   View All Requests
                   <ArrowRight className="ml-2 h-4 w-4" />
                 </Button>
+              </CardContent>
+            </Card>
+
+            {/* Alumni Directory Table */}
+            <Card className="animate-slide-up opacity-0" style={{ animationDelay: "0.35s" }}>
+              <CardHeader className="flex flex-row items-center justify-between">
+                <div>
+                  <CardTitle className="text-lg flex items-center gap-2">
+                    <GraduationCap className="h-5 w-5" />
+                    Alumni Directory
+                  </CardTitle>
+                  <CardDescription>
+                    Complete list of all alumni registered on the platform
+                  </CardDescription>
+                </div>
+                <Badge variant="secondary">{alumniDirectory.length} alumni</Badge>
+              </CardHeader>
+              <CardContent>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Batch</TableHead>
+                      <TableHead>Branch</TableHead>
+                      <TableHead>Company</TableHead>
+                      <TableHead>Job Title</TableHead>
+                      <TableHead>Email</TableHead>
+                      <TableHead>Status</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {alumniDirectory.map((alumni) => (
+                      <TableRow key={alumni.id}>
+                        <TableCell className="font-medium">{alumni.name}</TableCell>
+                        <TableCell>{alumni.batch}</TableCell>
+                        <TableCell>{alumni.branch}</TableCell>
+                        <TableCell>{alumni.company}</TableCell>
+                        <TableCell>{alumni.jobTitle}</TableCell>
+                        <TableCell className="text-muted-foreground text-xs">{alumni.email}</TableCell>
+                        <TableCell>
+                          {alumni.verified ? (
+                            <Badge className="bg-success text-success-foreground text-xs">Verified</Badge>
+                          ) : (
+                            <Badge variant="outline" className="text-foundation text-xs">Pending</Badge>
+                          )}
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </CardContent>
             </Card>
           </div>

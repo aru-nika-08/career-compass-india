@@ -29,6 +29,7 @@ import ManageEvents from "./pages/admin/ManageEvents";
 import SendAnnouncements from "./pages/admin/SendAnnouncements";
 import ManageInternships from "./pages/admin/ManageInternships";
 import ExportReports from "./pages/admin/ExportReports";
+import AlumniDirectory from "./pages/admin/AlumniDirectory";
 
 const queryClient = new QueryClient();
 
@@ -64,6 +65,7 @@ const App = () => (
           <Route path="/admin/announcements" element={<SendAnnouncements />} />
           <Route path="/admin/internships" element={<ManageInternships />} />
           <Route path="/admin/reports" element={<ExportReports />} />
+          <Route path="/admin/alumni-directory" element={<AlumniDirectory />} />
           
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
